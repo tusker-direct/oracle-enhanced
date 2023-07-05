@@ -11,10 +11,10 @@ jobs:
     strategy:
       matrix:
         ruby: [
-          3.0,
+          3,
+          3.1,
           2.7,
           2.6,
-          2.5,
           jruby,
           jruby-head
         ]
@@ -40,6 +40,13 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
+    - name: Update system gems
+      run: |
+        gem update --system
+    - name: Install default gems
+      run: |
+        gem install timeout -v 0.4.0
+        gem install net-protocol -v 0.2.1
     - name: Install required package
       run: |
         sudo apt-get install alien
